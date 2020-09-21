@@ -4,8 +4,6 @@ import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class cliente implements Runnable{
 
@@ -34,7 +32,7 @@ public class cliente implements Runnable{
             sc.close();
 
         }catch (IOException ex){
-            Logger.getLogger(cliente.class.getName()).log(Level.SEVERE,null,ex);
+
         }
     }
 }

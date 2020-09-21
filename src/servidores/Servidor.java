@@ -6,53 +6,70 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Servidor extends Observable implements Runnable{
 
     private int puerto;
 
+    private int Label_puerto;
+
     public Servidor(int puerto) {
 
         this.puerto = puerto;
+        Label_puerto = puerto;
     }
 
+    public int getLabel_puerto() {
+        return Label_puerto;
+    }
+
+    public void setLabel_puerto(int label_puerto) {
+        Label_puerto = label_puerto;
+    }
 
     @Override
     public void run() {
-        ServerSocket servidor = null;
 
-        Socket sc = null;
-        DataInputStream in;
-        DataOutput out;
+        while (true){
 
-        try{
-            servidor = new ServerSocket(puerto);
-            System.out.println("Servidor iniciado");
+            setLabel_puerto(puerto);
 
-            while (true){
+            System.out.println(puerto + "puerto servidor");
 
-                sc = servidor.accept();
+            ServerSocket servidor = null;
 
-                System.out.println("cliente contectado");
-                in = new DataInputStream(sc.getInputStream());
+            Socket sc = null;
+            DataInputStream in;
+            DataOutput out;
 
-                String mensaje = in.readUTF();
+            try{
 
-                System.out.println(mensaje);
+                servidor = new ServerSocket(puerto);
 
-                this.setChanged();
-                this.notifyObservers(mensaje);
-                this.clearChanged();
 
-                sc.close();
-                System.out.println("Cliente Desconectado");
+                while (true){
+
+                    sc = servidor.accept();
+
+                    in = new DataInputStream(sc.getInputStream());
+
+                    String mensaje = in.readUTF();
+
+                    this.setChanged();
+                    this.notifyObservers(mensaje);
+                    this.clearChanged();
+
+                    sc.close();
+
+
+                }
+            } catch (IOException ex){
+                this.puerto+=1;
+
 
             }
-        } catch (IOException ex){
-            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE,null,ex);
         }
+
     }
 
 }

@@ -2,6 +2,7 @@ package gui;
 import servidores.cliente;
 import servidores.Servidor;
 
+import javax.management.StringValueExp;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,14 +14,12 @@ public class chat extends JFrame implements Observer {
     private JButton btnenviar;
     private JTextArea escribir_texto;
     private JTextArea verTexto;
+    private JTextField num_puerto;
+    private JLabel puerto_actual;
+    private JLabel label_puerto;
+    private String usario;
 
     public chat(){
-
-        add(Panel_1);
-
-        setTitle("Chat 1");
-        setSize(400,500);
-        setVisible(true);
 
         Servidor s = new Servidor(5000);
 
@@ -29,19 +28,38 @@ public class chat extends JFrame implements Observer {
         Thread t = new Thread(s);
         t.start();
 
+        add(Panel_1);
+
+        setTitle("Chat");
+        setSize(400,500);
+        setVisible(true);
+
+        label_puerto.setText((String.valueOf(s.getLabel_puerto())));
+
+        usario = JOptionPane.showInputDialog("Ingresa tu nombre");
 
         btnenviar.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                String mensaje = "1: "+escribir_texto.getText() + "\n";
+
+                String mensaje = usario+": "+escribir_texto.getText() + "\n";
 
                 verTexto.append(mensaje);
 
-                cliente c = new cliente(6000,mensaje);
+                escribir_texto.setText("");
+
+                int Puerto;
+                String texto = num_puerto.getText();
+
+                Puerto = Integer.parseInt(texto);
+
+                cliente c = new cliente(Puerto,mensaje);
                 Thread t = new Thread(c);
                 t.start();
             }
         });
+
     }
 
 
