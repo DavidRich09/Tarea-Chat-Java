@@ -7,16 +7,34 @@ import java.net.Socket;
 
 public class cliente implements Runnable{
 
+    /**
+     * Clase donde se mandará el mensaje al puerto indicado
+     */
+
     private int puerto;
     private String mensaje;
 
     public cliente(int puerto, String mensaje){
+
+        /**
+         *
+         * Contructor de la clase cliente
+         *
+         * @param : numero del puerto y mensaje deseado
+         *
+         */
         this.puerto = puerto;
         this.mensaje = mensaje;
     }
 
     @Override
     public void run() {
+
+        /**
+         *
+         * Se escribe el mensaje
+         *
+         */
         final String HOST = "127.0.0.1";
 
         DataOutput out;

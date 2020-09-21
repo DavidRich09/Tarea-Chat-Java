@@ -9,11 +9,22 @@ import java.util.Observable;
 
 public class Servidor extends Observable implements Runnable{
 
+    /**
+     *
+     * Clase del servidor
+     *
+     */
+
     private int puerto;
 
     private int Label_puerto;
 
     public Servidor(int puerto) {
+        /**
+         *
+         * Constructor de Servidor
+         *
+         */
 
         this.puerto = puerto;
         Label_puerto = puerto;
@@ -29,6 +40,13 @@ public class Servidor extends Observable implements Runnable{
 
     @Override
     public void run() {
+
+        /**
+         *
+         * Busca un puerto desosupado para escuchar en ese puerto.
+         * Si no encuentra el puerto, pasa al siguiente.
+         *
+         */
 
         while (true){
 

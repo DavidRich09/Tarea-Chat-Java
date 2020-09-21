@@ -2,7 +2,6 @@ package gui;
 import servidores.cliente;
 import servidores.Servidor;
 
-import javax.management.StringValueExp;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +9,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class chat extends JFrame implements Observer {
+    /**
+     *
+     * Clase de la interfaz gráfica
+     *
+     */
     private JPanel Panel_1;
     private JButton btnenviar;
     private JTextArea escribir_texto;
@@ -20,6 +24,12 @@ public class chat extends JFrame implements Observer {
     private String usario;
 
     public chat(){
+
+        /**
+         *
+         * Constructor de la clase
+         *
+         */
 
         Servidor s = new Servidor(5000);
 
@@ -33,6 +43,8 @@ public class chat extends JFrame implements Observer {
         setTitle("Chat");
         setSize(400,500);
         setVisible(true);
+        setResizable(false);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         label_puerto.setText((String.valueOf(s.getLabel_puerto())));
 
@@ -42,6 +54,13 @@ public class chat extends JFrame implements Observer {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                /**
+                 *
+                 * Evento del boton "enviar", donde se agarra el mensaje
+                 * el puerto.
+                 *
+                 */
 
                 String mensaje = usario+": "+escribir_texto.getText() + "\n";
 
@@ -65,6 +84,12 @@ public class chat extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+
+        /**
+         *
+         * Agrega el texto a la pantalla.
+         *
+         */
 
         this.verTexto.append(((String) arg));
 
